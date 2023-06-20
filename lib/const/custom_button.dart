@@ -3,8 +3,17 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 
 class CustomButton extends StatelessWidget {
-  const CustomButton({super.key});
-
+  const CustomButton({
+    super.key,
+    required this.width,
+    required this.heiht,
+    required this.title,
+    required this.onPressed,
+  });
+  final double width;
+  final double heiht;
+  final String title;
+  final VoidCallback onPressed;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -15,9 +24,9 @@ class CustomButton extends StatelessWidget {
         color: Colors.blue,
       ),
       child: TextButton(
-        onPressed: () {},
+        onPressed: onPressed,
         child: Text(
-          'Add ToDo',
+          title,
           style: TextStyle(
               fontSize: 15, fontWeight: FontWeight.w500, color: Colors.white),
         ),

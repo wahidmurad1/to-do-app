@@ -13,7 +13,7 @@ class SplashScreen extends StatelessWidget {
     return Scaffold(
       body: Container(
         child: Image.asset(
-          'assets/images/splashscreen.webp',
+          'assets/images/13815.jpg',
           // width: double.infinity,
           height: double.infinity,
           fit: BoxFit.cover,

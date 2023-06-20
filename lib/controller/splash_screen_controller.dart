@@ -1,12 +1,18 @@
 import 'dart:async';
 import 'package:get/get.dart';
+import 'package:to_do/controller/listview_controller.dart';
+import 'package:to_do/controller/sp_handler.dart';
 import 'package:to_do/screens/home_page.dart';
 import 'package:to_do/screens/splash_screen.dart';
 
 class SplashScreenController extends GetxController {
   @override
-  void onInit() {
+  void onInit() async {
     // TODO: implement onInit
+    SpHandler spHandler = SpHandler();
+    ListviewController listviewController = Get.put(ListviewController());
+    await spHandler.loadData();
+    // await spHandler.removeData();
     homepage();
     super.onInit();
   }
@@ -14,7 +20,7 @@ class SplashScreenController extends GetxController {
   homepage() async {
     //await loginController.removeToken();
     Timer(Duration(seconds: 3), () {
-      Get.off(() => HomePage());
+      Get.to(() => HomePage());
     });
   }
 }
