@@ -2,16 +2,25 @@ import 'dart:convert';
 
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:to_do/controller/date_picker_controller.dart';
+import 'package:to_do/controller/date_time_controller.dart';
 import 'package:to_do/controller/listview_controller.dart';
 import 'package:to_do/controller/model/note_data.dart';
 
 class SpHandler {
+  ListviewController listviewController = ListviewController();
   saveData() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     var v = Get.find<ListviewController>();
+    var datePickerController = Get.find<DatePickerController>();
+    var dateTimeHandler = Get.find<DateTimeHandler>();
     final noteData = {
       "titleText": v.titleController.text,
-      "noteText": v.noteController.text
+      "noteText": v.noteController.text,
+      "startDate": datePickerController.dateortimepicker.value,
+      "endDate": datePickerController.dateortimepicker2.value,
+      "startTime": dateTimeHandler.startTime.value,
+      "endTime": dateTimeHandler.endTime.value,
     };
     print(noteData);
     var data = await loadData();
@@ -32,20 +41,9 @@ class SpHandler {
     } else {
       var map = jsonDecode(json);
       print("map $map");
-      // final note = Note.fromJson(map);
-      // print(note);
-      // print("title ${note.titleText}, Note ${note.noteText}");
-      // List<Map<String, dynamic>> newList = List.from(map);
       var v = Get.find<ListviewController>();
       v.valueList.value = map.map((e) => Note.fromJson(e)).toList();
       return map;
-      // List<MapEntry<String, dynamic>> newList = map.entries.toList();
-      // valueList.value = newList.map((e) => Note.fromJson(e)).toList();
-      // List<MapEntry<String, dynamic>> newList = map.entries.toList();
-      // valueList.value = newList.map((e) => Note.fromJson(e.value)).toList();
-      // valueList.value = map.entries.cast<Note>().toList();
-      // List newList = map.entries.map((entry) => entry.value).toList();
-      // valueList.value = newList.map((e) => Note.fromJson(e)).toList();
     }
   }
 

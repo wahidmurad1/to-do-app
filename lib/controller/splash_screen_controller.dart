@@ -12,7 +12,7 @@ class SplashScreenController extends GetxController {
     SpHandler spHandler = SpHandler();
     ListviewController listviewController = Get.put(ListviewController());
     await spHandler.loadData();
-    // await spHandler.removeData();
+    //await spHandler.removeData();
     homepage();
     super.onInit();
   }
