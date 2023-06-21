@@ -12,12 +12,12 @@ class SplashScreenController extends GetxController {
     SpHandler spHandler = SpHandler();
     ListviewController listviewController = Get.put(ListviewController());
     await spHandler.loadData();
-    //await spHandler.removeData();
-    homepage();
+    await spHandler.removeData();
+    timeDuration();
     super.onInit();
   }
 
-  homepage() async {
+  timeDuration() async {
     //await loginController.removeToken();
     Timer(Duration(seconds: 3), () {
       Get.to(() => HomePage());

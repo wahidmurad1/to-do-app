@@ -15,6 +15,8 @@ class DateTimeHandler extends GetxController {
   RxString endDate = "".obs;
   RxString startTime = "".obs;
   RxString endTime = "".obs;
+  int selectedHour = DateTime.now().hour;
+  int selectedMinute = DateTime.now().minute;
 
   void starDateChecker(context) async {
     DateTime? pickStartDate = await showDatePicker(
@@ -22,6 +24,7 @@ class DateTimeHandler extends GetxController {
         initialDate: selectedStartDate.value,
         firstDate: firstDateforEndDate.value ?? DateTime(2000),
         lastDate: DateTime(2101));
+
     if (pickStartDate != null) {
       selectedStartDate.value = pickStartDate;
       startDate.value =

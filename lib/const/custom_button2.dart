@@ -9,7 +9,7 @@ Widget CustomButton2(width, buttonText, startorEnd) {
       tapTargetSize: MaterialTapTargetSize.shrinkWrap,
       padding: EdgeInsets.zero,
       minimumSize: Size.zero,
-      //backgroundColor: Colors.amber,
+      //backgroundColor: Colors.red,
       shape: buttonText == "Cancel"
           ? const RoundedRectangleBorder(
               borderRadius: BorderRadius.only(
@@ -27,14 +27,34 @@ Widget CustomButton2(width, buttonText, startorEnd) {
           ? Get.back()
           : startorEnd == "Start Time"
               ? timePickerController.setStartHourMin()
-              : timePickerController.setEndHourMin();
+              : timePickerController.timeValidation();
     },
-    child: SizedBox(
-      height: 50,
-      width: (width - 60) / 2,
-      child: Center(
-        child: Text(buttonText),
-      ),
-    ),
+    child: buttonText == "Cancel"
+        ? SizedBox(
+            height: 30,
+            width: (width - 60) / 2,
+            child: Center(
+              child: Text(
+                buttonText,
+                style: TextStyle(
+                    fontSize: 15,
+                    fontWeight: FontWeight.w600,
+                    color: Colors.red),
+              ),
+            ),
+          )
+        : SizedBox(
+            height: 30,
+            width: (width - 60) / 2,
+            child: Center(
+              child: Text(
+                buttonText,
+                style: TextStyle(
+                    fontSize: 15,
+                    fontWeight: FontWeight.w600,
+                    color: Colors.green),
+              ),
+            ),
+          ),
   );
 }

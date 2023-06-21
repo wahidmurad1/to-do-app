@@ -26,15 +26,13 @@ class DatePicker2 extends StatelessWidget {
           DateTime? pickStartDate = await showDatePicker(
               context: context,
               initialDate: datePickerController.selectedStartDate.value,
-              firstDate: DateTime(2000),
+              firstDate: DateTime.now(), //DateTime(2000),
               lastDate: DateTime(2101));
           if (pickStartDate != null) {
             datePickerController.selectedDate = pickStartDate;
             datePickerController.selectedStartDate.value = pickStartDate;
-            //globalvariables.selectedEndDate.value =  globalvariables.selectedStartDate.value;
             datePickerController.dateortimepicker.value =
                 formatDate(pickStartDate, [dd, ".", " ", MM, " ", yyyy]);
-            //globalvariables.selectedEndDate.value = pickStartDate;
           }
         }
         //end
@@ -54,21 +52,27 @@ class DatePicker2 extends StatelessWidget {
             datePickerController.selectedEndDate.value = pickEndDate;
           }
           ;
-          // globalvariables.selectedEndDate.value = pickEndDate;
-          // print(globalvariables.selectedEndDate.value);
-          // globalvariables.selectedStartDate.value = pickStartDate;
-          //globalvariables.selectedEndDate2.value = globalvariables.selectedEndDate.value;
           datePickerController.dateortimepicker2.value =
               formatDate(pickEndDate, [dd, ".", " ", MM, " ", yyyy]);
         }
-        // }
         if (datePickerController.selectedEndDate.value
             .isAfter(datePickerController.selectedStartDate.value)) {
           print("End date is greater than start date");
-          // setState(() {
-          //globalvariables.selectedEndDate.value="" as DateTime;
-          // datePickerController.dateortimepicker.value = "";
-          //});
+        }
+        if (datePickerController.dateortimepicker.isEmpty) {
+          Get.snackbar(
+              'StartDate Not Selected', 'Firstly Select The Start Date',
+              // titleText: Text(
+              //   "Not Selected",
+              //   style: TextStyle(color: Colors.red),
+              // ),
+              // messageText: Text(
+              //   "Firstly Select The Start Date",
+              //   style: TextStyle(color: Colors.redAccent),
+              // ),
+              colorText: Colors.red,
+              // backgroundColor: Colors.black54,
+              snackPosition: SnackPosition.BOTTOM);
         }
 
         // else if(globalvariables.selectedStartDate.value.isAfter(globalvariables.selectedEndDate.value)){
@@ -122,7 +126,6 @@ class DatePicker2 extends StatelessWidget {
             fontSize: 14,
             fontFamily: 'Euclid Regular',
             color: Colors.black,
-            //fontWeight: FontWeight.w500
           ),
         ),
       );
@@ -139,6 +142,7 @@ class DatePicker2 extends StatelessWidget {
         ),
       );
     }
+
     if (datePickerController.dateortimepicker2 == "" &&
         isInitialDateTime == false) {
       return Center(
@@ -152,7 +156,21 @@ class DatePicker2 extends StatelessWidget {
           ),
         ),
       );
-    } else if (datePickerController.selectedEndDate.value
+    }
+    //  else if (datePickerController.dateortimepicker == "") {
+    //   return Center(
+    //     child: Text(
+    //       titleText,
+    //       style: TextStyle(
+    //         fontSize: 14,
+    //         fontFamily: 'Euclid Regular',
+    //         color: Colors.black,
+    //         //fontWeight: FontWeight.w500
+    //       ),
+    //     ),
+    //   );
+    // }
+    else if (datePickerController.selectedEndDate.value
         .isBefore(datePickerController.selectedStartDate.value)) {
       return Center(
         child: Text(

@@ -3,10 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:numberpicker/numberpicker.dart';
 import 'package:to_do/const/custom_button2.dart';
+import 'package:to_do/controller/date_picker_controller.dart';
+import 'package:to_do/controller/date_time_controller.dart';
 import 'package:to_do/controller/time_picker_controller.dart';
 
 class CustomSpinnerTimePickerPopUP {
   TimePickerController timePickerController = Get.put(TimePickerController());
+  DatePickerController datePickerController = Get.put(DatePickerController());
+  DateTimeHandler dateTimeHandler = Get.put(DateTimeHandler());
   timePickerPopUP(context, boxText) {
     var height = MediaQuery.of(context).size.height;
     var width = MediaQuery.of(context).size.width;
@@ -21,8 +25,8 @@ class CustomSpinnerTimePickerPopUP {
             padding: EdgeInsets.zero,
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10), color: Colors.white),
-            height: height - 450,
-            width: width - 40,
+            height: height - 550,
+            width: width - 59,
             child: Column(
               //mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -34,13 +38,18 @@ class CustomSpinnerTimePickerPopUP {
                         NumberPicker(
                           minValue: 0,
                           maxValue: 23,
-                          value: timePickerController.hour.value,
+                          value: boxText == 'Start Time'
+                              ? timePickerController.hour.value
+                              : timePickerController.endHour
+                                  .value, //timePickerController.hour.value,
                           zeroPad: true,
                           infiniteLoop: true,
                           itemWidth: 70,
                           itemHeight: 60,
                           onChanged: (value) {
-                            timePickerController.hour.value = value;
+                            boxText == 'Start Time'
+                                ? timePickerController.hour.value = value
+                                : timePickerController.endHour.value = value;
                           },
                           textStyle:
                               const TextStyle(color: Colors.grey, fontSize: 20),
@@ -61,13 +70,18 @@ class CustomSpinnerTimePickerPopUP {
                           minValue: 0,
                           step: 5,
                           maxValue: 59,
-                          value: timePickerController.minute.value,
+                          value: boxText == 'Start Time'
+                              ? timePickerController.minute.value
+                              : timePickerController.endMinute
+                                  .value, //timePickerController.minute.value,
                           zeroPad: true,
                           infiniteLoop: true,
-                          itemWidth: 70,
+                          itemWidth: 35,
                           itemHeight: 60,
                           onChanged: (value) {
-                            timePickerController.minute.value = value;
+                            boxText == 'Start Time'
+                                ? timePickerController.minute.value = value
+                                : timePickerController.endMinute.value = value;
                           },
                           textStyle:
                               const TextStyle(color: Colors.grey, fontSize: 20),

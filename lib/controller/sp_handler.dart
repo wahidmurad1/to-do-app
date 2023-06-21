@@ -5,7 +5,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:to_do/controller/date_picker_controller.dart';
 import 'package:to_do/controller/date_time_controller.dart';
 import 'package:to_do/controller/listview_controller.dart';
-import 'package:to_do/controller/model/note_data.dart';
+import 'package:to_do/model/note_data.dart';
 
 class SpHandler {
   ListviewController listviewController = ListviewController();

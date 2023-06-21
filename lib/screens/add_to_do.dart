@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:to_do/const/custom_button.dart';
 import 'package:to_do/const/custom_time_picker.dart';
@@ -34,6 +35,8 @@ class AddToDo extends StatelessWidget {
                   children: [
                     IconButton(
                       onPressed: () {
+                        listviewController.clearAllData();
+                        listviewController.notewordCount.value = 0;
                         Get.back();
                       },
                       icon: Icon(
@@ -70,13 +73,24 @@ class AddToDo extends StatelessWidget {
                       border: Border.all(width: 1, color: Color(0XFFD1D5DB)),
                       borderRadius: BorderRadius.circular(10)),
                   child: TextField(
+                    focusNode: listviewController.firstTextFieldFocus,
+                    textInputAction: TextInputAction.next,
+                    onSubmitted: (value) {
+                      FocusScope.of(context).requestFocus(
+                          listviewController.secondTextFieldFocus);
+                      int wordCount = listviewController.titleController.text
+                          .trim()
+                          .split(' ')
+                          .length;
+                    },
                     maxLines: 1,
+                    maxLength: listviewController.titleWordLimit,
                     controller: listviewController.titleController,
                     style: TextStyle(color: Colors.black),
-                    textInputAction: TextInputAction.done,
                     keyboardType: TextInputType.text,
                     decoration: InputDecoration(
                       hintText: 'Write task title',
+                      counterText: '',
                       hintStyle: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.w400,
@@ -94,23 +108,31 @@ class AddToDo extends StatelessWidget {
                   ),
                 ),
               ),
+
               Padding(
                 padding:
                     const EdgeInsets.symmetric(horizontal: 15, vertical: 10)
                         .copyWith(bottom: 0),
                 child: Container(
-                  height: 150,
+                  height: 130,
                   decoration: BoxDecoration(
                       border: Border.all(width: 1, color: Color(0XFFD1D5DB)),
                       borderRadius: BorderRadius.circular(10)),
                   child: TextField(
-                    maxLines: 7,
+                    focusNode: listviewController.secondTextFieldFocus,
+                    keyboardType: TextInputType.multiline,
+                    maxLines: 5,
+                    onChanged: (text) {
+                      listviewController.notewordCount.value = text.length;
+                      listviewController.notewordCount;
+                    },
+                    maxLength: listviewController.noteWordLimit,
+                    textInputAction: TextInputAction.newline,
                     controller: listviewController.noteController,
                     style: TextStyle(color: Colors.black),
-                    textInputAction: TextInputAction.done,
-                    keyboardType: TextInputType.text,
                     decoration: InputDecoration(
                       hintText: 'Write task note',
+                      counterText: '',
                       hintStyle: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.w400,
@@ -128,6 +150,18 @@ class AddToDo extends StatelessWidget {
                   ),
                 ),
               ),
+              SizedBox(
+                height: 8,
+              ),
+              Align(
+                alignment: Alignment.bottomRight,
+                child: Padding(
+                  padding: const EdgeInsets.only(right: 15),
+                  child: Obx(() => Text(
+                      '${listviewController.notewordCount.value}/${listviewController.noteWordLimit}')),
+                ),
+              ),
+
               //start date and time
               Padding(
                 padding:
@@ -209,27 +243,37 @@ class AddToDo extends StatelessWidget {
                 title: 'Add',
                 onPressed: () async {
                   SpHandler spHandler = SpHandler();
-
                   if (listviewController.titleController.text == '' ||
                       listviewController.noteController.text == '' ||
                       datePickerController.dateortimepicker.value == "" ||
-                      datePickerController.dateortimepicker2.value == "" ||
-                      dateTimeHandler.startTime.value == "" ||
-                      dateTimeHandler.endTime.value == "") {
+                      dateTimeHandler.startTime.value == "") {
+                    listviewController.titleController;
+                    listviewController.noteController;
+                    datePickerController.dateortimepicker.value;
+                    datePickerController.dateortimepicker2.value;
+                    dateTimeHandler.startTime.value;
+                    dateTimeHandler.endTime.value;
+                    Get.snackbar('Required Data Not Filled Properly',
+                        'Plesae Fill all Required fields',
+                        // titleText: Text(
+                        //   "Not Selected",
+                        //   style: TextStyle(color: Colors.red),
+                        // ),
+                        // messageText: Text(
+                        //   "Firstly Select The Start Date",
+                        //   style: TextStyle(color: Colors.redAccent),
+                        // ),
+                        colorText: Colors.red,
+                        // backgroundColor: Colors.black54,
+                        snackPosition: SnackPosition.BOTTOM);
                   } else {
                     await spHandler.saveData();
                     await spHandler.loadData();
+                    listviewController.clearAllData();
+                    Fluttertoast.showToast(msg: "Data Added Successfully");
+                    listviewController.notewordCount.value = 0;
+                    Get.to(() => HomePage());
                   }
-
-                  listviewController.titleController.clear();
-                  listviewController.noteController.clear();
-                  datePickerController.dateortimepicker.value = "";
-                  datePickerController.dateortimepicker2.value = "";
-                  datePickerController.selectedStartDate.value = DateTime.now();
-                  dateTimeHandler.startTime.value = "";
-                  dateTimeHandler.endTime.value = "";
-                  Get.to(() => HomePage());
-                  // print(listviewController.myList);
                 },
               ),
             ],
