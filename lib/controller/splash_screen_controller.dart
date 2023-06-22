@@ -9,12 +9,12 @@ class SplashScreenController extends GetxController {
   @override
   void onInit() async {
     // TODO: implement onInit
+    super.onInit();
     SpHandler spHandler = SpHandler();
     ListviewController listviewController = Get.put(ListviewController());
-    await spHandler.loadData();
-    await spHandler.removeData();
     timeDuration();
-    super.onInit();
+    // await spHandler.removeData();
+    await spHandler.loadData();
   }
 
   timeDuration() async {

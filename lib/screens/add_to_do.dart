@@ -9,6 +9,7 @@ import 'package:to_do/controller/date_time_controller.dart';
 import 'package:to_do/controller/listview_controller.dart';
 import 'package:to_do/controller/shared_preference_controller.dart';
 import 'package:to_do/controller/sp_handler.dart';
+import 'package:to_do/model/note_data.dart';
 import 'package:to_do/screens/home_page.dart';
 import 'package:date_format/date_format.dart';
 
@@ -20,6 +21,7 @@ class AddToDo extends StatelessWidget {
   ListviewController listviewController = Get.put(ListviewController());
   DatePickerController datePickerController = Get.put(DatePickerController());
   DateTimeHandler dateTimeHandler = Get.put(DateTimeHandler());
+  SpHandler spHandler = Get.put(SpHandler());
 
   @override
   Widget build(BuildContext context) {
@@ -161,7 +163,6 @@ class AddToDo extends StatelessWidget {
                       '${listviewController.notewordCount.value}/${listviewController.noteWordLimit}')),
                 ),
               ),
-
               //start date and time
               Padding(
                 padding:
@@ -255,22 +256,45 @@ class AddToDo extends StatelessWidget {
                     dateTimeHandler.endTime.value;
                     Get.snackbar('Required Data Not Filled Properly',
                         'Plesae Fill all Required fields',
-                        // titleText: Text(
-                        //   "Not Selected",
-                        //   style: TextStyle(color: Colors.red),
-                        // ),
-                        // messageText: Text(
-                        //   "Firstly Select The Start Date",
-                        //   style: TextStyle(color: Colors.redAccent),
-                        // ),
                         colorText: Colors.red,
-                        // backgroundColor: Colors.black54,
                         snackPosition: SnackPosition.BOTTOM);
                   } else {
-                    await spHandler.saveData();
-                    await spHandler.loadData();
+                    if (listviewController.noteId.value == '') {
+                      await spHandler.saveData();
+                      await spHandler.loadData();
+                    } else {
+                      await spHandler.editNote(
+                        Note(
+                            id: listviewController.noteId.value,
+                            titleText: listviewController.titleController.text,
+                            noteText: listviewController.noteController.text,
+                            startDate:
+                                datePickerController.dateortimepicker.value,
+                            endDate:
+                                datePickerController.dateortimepicker2.value,
+                            startTime: dateTimeHandler.startTime.value,
+                            endTime: dateTimeHandler.endTime.value),
+                        //  return;
+                      );
+                    }
+                    // await spHandler.saveData();
+                    // await spHandler.loadData();
+                    // await spHandler.editNote(
+                    //   Note(
+                    //       id: listviewController.noteId.value,
+                    //       titleText: listviewController.titleController.text,
+                    //       noteText: listviewController.noteController.text,
+                    //       startDate:
+                    //           datePickerController.dateortimepicker.value,
+                    //       endDate: datePickerController.dateortimepicker2.value,
+                    //       startTime: dateTimeHandler.startTime.value,
+                    //       endTime: dateTimeHandler.endTime.value),
+                    //   //  return;
+                    // );
                     listviewController.clearAllData();
-                    Fluttertoast.showToast(msg: "Data Added Successfully");
+                    Get.snackbar('Data added', 'Data add Successfully',
+                        colorText: Colors.green,
+                        snackPosition: SnackPosition.BOTTOM);
                     listviewController.notewordCount.value = 0;
                     Get.to(() => HomePage());
                   }

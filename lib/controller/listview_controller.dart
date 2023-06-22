@@ -21,6 +21,7 @@ class ListviewController extends GetxController {
   int titleWordLimit = 50;
   int noteWordLimit = 256;
   RxInt notewordCount = 0.obs;
+  RxString noteId = RxString('');
   RxList valueList = RxList([]);
 
   @override

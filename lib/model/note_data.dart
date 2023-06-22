@@ -1,4 +1,5 @@
 class Note {
+  String? id;
   String? titleText;
   String? noteText;
   String? startDate;
@@ -7,6 +8,7 @@ class Note {
   String? endTime;
 
   Note({
+    required this.id,
     required this.titleText,
     required this.noteText,
     required this.startDate,
@@ -16,6 +18,7 @@ class Note {
   });
   Map<String, dynamic> toJson() {
     return {
+      'id': id,
       'title': titleText,
       'note': noteText,
       'startDate': startDate,
@@ -27,6 +30,7 @@ class Note {
 
   factory Note.fromJson(Map<String, dynamic> json) {
     return Note(
+      id: json['id'] ?? '',
       titleText: json['titleText'] ?? '',
       noteText: json['noteText'] ?? '',
       startDate: json['startDate'] ?? '',
