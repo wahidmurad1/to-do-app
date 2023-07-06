@@ -1,6 +1,9 @@
 import 'package:date_format/date_format.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
+import 'package:to_do/controller/date_picker_controller.dart';
+import 'package:to_do/controller/time_picker_controller.dart';
 
 class DateTimeHandler extends GetxController {
   RxList listofDateTime = [].obs;
@@ -15,8 +18,11 @@ class DateTimeHandler extends GetxController {
   RxString endDate = "".obs;
   RxString startTime = "".obs;
   RxString endTime = "".obs;
-  int selectedHour = DateTime.now().hour;
-  int selectedMinute = DateTime.now().minute;
+  //DateTime now = DateTime.now();
+  DateTime currentDate = DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day);
+   String currentTime = DateFormat.Hm().format(DateTime.now());
+  // int selectedHour = DateTime.now().hour;
+  // int selectedMinute = DateTime.now().minute;
 
   void starDateChecker(context) async {
     DateTime? pickStartDate = await showDatePicker(
@@ -128,4 +134,5 @@ class DateTimeHandler extends GetxController {
     }
     update();
   }
+  
 }

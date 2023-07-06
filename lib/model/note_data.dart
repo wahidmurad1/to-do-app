@@ -4,8 +4,8 @@ class Note {
   String? noteText;
   String? startDate;
   String? endDate;
-  String? startTime;
-  String? endTime;
+  String ? startTime;
+  String ? endTime;
 
   Note({
     required this.id,

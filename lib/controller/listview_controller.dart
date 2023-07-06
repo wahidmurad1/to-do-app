@@ -1,21 +1,20 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:to_do/controller/date_picker_controller.dart';
 import 'package:to_do/controller/date_time_controller.dart';
-import 'package:to_do/model/note_data.dart';
+
+
 
 class ListviewController extends GetxController {
   DatePickerController datePickerController = Get.put(DatePickerController());
   DateTimeHandler dateTimeHandler = Get.put(DateTimeHandler());
   TextEditingController titleController = TextEditingController();
   TextEditingController noteController = TextEditingController();
-  TextEditingController startDateController = TextEditingController();
-  TextEditingController startTimeController = TextEditingController();
-  TextEditingController endDateController = TextEditingController();
-  TextEditingController endTimeController = TextEditingController();
+  // TextEditingController startDateController = TextEditingController();
+  // TextEditingController startTimeController = TextEditingController();
+  // TextEditingController endDateController = TextEditingController();
+  // TextEditingController endTimeController = TextEditingController();
   FocusNode firstTextFieldFocus = FocusNode();
   FocusNode secondTextFieldFocus = FocusNode();
   int titleWordLimit = 50;
@@ -23,6 +22,15 @@ class ListviewController extends GetxController {
   RxInt notewordCount = 0.obs;
   RxString noteId = RxString('');
   RxList valueList = RxList([]);
+  RxList updateList = RxList([]);
+
+  @override
+  void onInit() {
+    // TODO: implement onInit
+    //for initially hide the keyboard
+     SystemChannels.textInput.invokeMethod('TextInput.hide');
+    super.onInit();
+  }
 
   @override
   void onClose() {

@@ -15,6 +15,8 @@ class CustomTimePicker extends StatelessWidget {
   TimePickerController timePickerPopUp = Get.put(TimePickerController());
   CustomSpinnerTimePickerPopUP customSpinnerTimePickerPopUP =
       Get.put(CustomSpinnerTimePickerPopUP());
+  DateTimeHandler dateTimeHandler = Get.put(DateTimeHandler());
+  TimePickerController timePickerController = Get.put(TimePickerController());
 
   @override
   Widget build(BuildContext context) {
@@ -29,20 +31,18 @@ class CustomTimePicker extends StatelessWidget {
           boxTextString,
         );
       },
-      child: Obx(
-        () => Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            //labelText(),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                boxText(),
-              ],
-            ),
-          ],
-        ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          //labelText(),
+          Obx(() => Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  boxText(),
+                ],
+              )),
+        ],
       ),
     );
   }

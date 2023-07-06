@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:to_do/controller/date_time_controller.dart';
 import 'package:to_do/controller/time_picker_controller.dart';
 
 Widget CustomButton2(width, buttonText, startorEnd) {
   TimePickerController timePickerController = Get.put(TimePickerController());
+  DateTimeHandler dateTimeHandler = Get.put(DateTimeHandler());
   return TextButton(
     style: TextButton.styleFrom(
       tapTargetSize: MaterialTapTargetSize.shrinkWrap,
@@ -25,9 +27,7 @@ Widget CustomButton2(width, buttonText, startorEnd) {
     onPressed: () {
       buttonText == "Cancel"
           ? Get.back()
-          : startorEnd == "Start Time"
-              ? timePickerController.setStartHourMin()
-              : timePickerController.timeValidation();
+          : timePickerController.startOrEndTime(startorEnd);
     },
     child: buttonText == "Cancel"
         ? SizedBox(
@@ -37,8 +37,8 @@ Widget CustomButton2(width, buttonText, startorEnd) {
               child: Text(
                 buttonText,
                 style: TextStyle(
-                    fontSize: 15,
-                    fontWeight: FontWeight.w600,
+                    fontSize: 14,
+                    fontWeight: FontWeight.w400,
                     color: Colors.red),
               ),
             ),
@@ -52,7 +52,7 @@ Widget CustomButton2(width, buttonText, startorEnd) {
                 style: TextStyle(
                     fontSize: 15,
                     fontWeight: FontWeight.w600,
-                    color: Colors.green),
+                    color: Colors.blue),
               ),
             ),
           ),
